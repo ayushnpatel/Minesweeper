@@ -43,18 +43,18 @@ public class Minesweeper extends JPanel implements ActionListener{
     
 
     public Minesweeper(){
-        smileyStart = new ImageIcon("smiley.png");
+        smileyStart = new ImageIcon("/Users/ayush/Desktop/Data Structures/Minesweeper/sprites/smiley.png");
         smileyStart = new ImageIcon(smileyStart.getImage().getScaledInstance(37, 37, Image.SCALE_SMOOTH));
-        smileyHappy = new ImageIcon("smileyHappy.png");
+        smileyHappy = new ImageIcon("/Users/ayush/Desktop/Data Structures/Minesweeper/sprites/smileyHappy.png");
         smileyHappy = new ImageIcon(smileyHappy.getImage().getScaledInstance(37, 37, Image.SCALE_SMOOTH));
-        smileyLose = new ImageIcon("smileyLose.png");
+        smileyLose = new ImageIcon("/Users/ayush/Desktop/Data Structures/Minesweeper/sprites/smileyLose.png");
         smileyLose = new ImageIcon(smileyLose.getImage().getScaledInstance(37, 37, Image.SCALE_SMOOTH));
-        smileyPressed = new ImageIcon("smileyPressed.png");
+        smileyPressed = new ImageIcon("/Users/ayush/Desktop/Data Structures/Minesweeper/sprites/smileyPressed.png");
         smileyPressed = new ImageIcon(smileyPressed.getImage().getScaledInstance(37, 37, Image.SCALE_SMOOTH));
         if(!gameFirstStarted){
             flag = new ImageIcon("/Users/ayush/Desktop/Data Structures/Minesweeper/sprites/flagged.png");
             flag = new ImageIcon(flag.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
-            block = new ImageIcon("block.png");
+            block = new ImageIcon("/Users/ayush/Desktop/Data Structures/Minesweeper/sprites/block.png");
             block = new ImageIcon(block.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
             one = new ImageIcon("/Users/ayush/Desktop/Data Structures/Minesweeper/sprites/one.png");
             one = new ImageIcon(one.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
@@ -81,7 +81,6 @@ public class Minesweeper extends JPanel implements ActionListener{
         try {
             ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.BOLD, new File("digital-7 (italic).ttf")));
-            System.out.println(ge.getAllFonts()[ge.getAllFonts().length-1]);
        } catch (IOException|FontFormatException e) {
             //Handle exception  
         }  
@@ -109,7 +108,6 @@ public class Minesweeper extends JPanel implements ActionListener{
                     timerLabel.setText("0"+timeCount);
                 }else
                     timerLabel.setText(""+timeCount);
-                //System.out.println(timeCount);
   
             }
         };
@@ -248,7 +246,6 @@ public class Minesweeper extends JPanel implements ActionListener{
         gridPanel = new JPanel();
         gridArray = new Tile[difficultyHeight][difficultyWidth];
         gridPanel.setLayout(new GridLayout(difficultyHeight, difficultyWidth));
-        System.out.println(gridArray.length+"    "+gridArray[0].length);
         for(x = 0; x < gridArray.length; x++){
             for( y = 0; y < gridArray[x].length; y++){
                 gridArray[x][y] = new Tile(new JToggleButton(block), "BL", new Point(x,y));
@@ -276,7 +273,6 @@ public class Minesweeper extends JPanel implements ActionListener{
                                     gridArray[thisX][thisY].setClickable(false);
                                     mineCount--;
                                     mineLabel.setText(mineCount+"");
-                                    System.out.println("first "+flagged);
                                     gridArray[thisX][thisY].setFlagged(true);
                                 }else if(flagged && !gridArray[thisX][thisY].getClickable()){
                                     gridArray[thisX][thisY].getButton().setIcon(block);
@@ -284,7 +280,6 @@ public class Minesweeper extends JPanel implements ActionListener{
                                     mineCount++;
                                     mineLabel.setText(mineCount+"");
                                     gridArray[thisX][thisY].setClickable(true);
-                                    System.out.println("second "+flagged);
                                     gridArray[thisX][thisY].setFlagged(false);
                                 }           
                                 
@@ -320,9 +315,7 @@ public class Minesweeper extends JPanel implements ActionListener{
                     }
                 });
                 gridPanel.add(gridArray[x][y].getButton());
-                //System.out.print(gridArray[x][y].getState()+" ");
             }
-            //System.out.println();
         }
         Border blackline = BorderFactory.createLineBorder(Color.black);
         gridPanel.setBorder(blackline);
@@ -333,7 +326,6 @@ public class Minesweeper extends JPanel implements ActionListener{
     }
     public void doSomething(){
         timeCount++;
-        System.out.println(timeCount);
     }public void actionPerformed(ActionEvent e) {
         if (beginnerButton.isSelected()) {
             timeCount = 0;
@@ -469,7 +461,6 @@ public class Minesweeper extends JPanel implements ActionListener{
     }
     public void setBoard(int clickedX, int clickedY){
         smileyButton.setIcon(smileyStart);
-        //System.out.println("ASFASFASFASFASF");
         int mineCountTemp = 0;
         switch(difficultyWidth){
             case 9:
@@ -501,15 +492,8 @@ public class Minesweeper extends JPanel implements ActionListener{
                 }
             }
         }
-        for(int x = 0; x < gridArray.length; x++){
-            for(int y = 0; y < gridArray[0].length; y++){
-                System.out.print(gridArray[x][y].getState()+"\t");
-            }
-            System.out.println();
-        }
     }
     public static void expansionAlgorithm(int emptyX, int emptyY){
-        //System.out.println(emptyX+" "+emptyY);
         if(isValid(emptyX,emptyY-1) && !gridArray[emptyX][emptyY-1].getState().equals("BO")){
             gridArray[emptyX][emptyY-1].openUp();
         }if(isValid(emptyX-1,emptyY-1) && !gridArray[emptyX-1][emptyY-1].getState().equals("BO")){
